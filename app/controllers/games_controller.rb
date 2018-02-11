@@ -4,6 +4,7 @@ class GamesController < ApplicationController
   end
 
   def score
+    raise
   end
 
   def generate_grid(grid_size)
