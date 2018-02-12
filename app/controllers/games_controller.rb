@@ -7,15 +7,28 @@ class GamesController < ApplicationController
   end
 
   def score
-    @my_attempt = params[:word]
+    @my_attempt = params[:word].upcase
     @grid = params[:my_grid]
-    included?(@my_attempt, @grid)
+    message(@my_attempt, @grid)
+    binding.pry
   end
 
   private
 
+  def message(attempt, grid)
+    if included?(attempt, grid)
+      if english_word?(attempt)
+        "Congratulations #{attempt} is a valid English word!"
+      else
+        "Soory but #{attempt} does not seem to be a valid english word"
+      end
+    else
+      "Sorry but #{attempt} can't be built out of #{grid.join(',')}"
+    end
+  end
+
   def included?(attempt, grid)
-    attempt.chars.all? { |letter| attempt.upcase.count(letter) <= grid.count(letter) }
+    attempt.chars.all? { |letter| attempt.count(letter) <= grid.count(letter) }
   end
 
   def english_word?(word)
