@@ -9,8 +9,7 @@ class GamesController < ApplicationController
   def score
     @my_attempt = params[:word].upcase
     @grid = params[:my_grid]
-    message(@my_attempt, @grid)
-    binding.pry
+    @result = message(@my_attempt, @grid)
   end
 
   private
@@ -23,7 +22,7 @@ class GamesController < ApplicationController
         "Soory but #{attempt} does not seem to be a valid english word"
       end
     else
-      "Sorry but #{attempt} can't be built out of #{grid.join(',')}"
+      "Sorry but #{attempt} can't be built out of #{grid.gsub(/\W/, ' ')}"
     end
   end
 
